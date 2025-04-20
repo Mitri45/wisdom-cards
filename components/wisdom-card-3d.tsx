@@ -1,8 +1,9 @@
 "use client";
 
 import type { WisdomItem } from "@/types/wisdom";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useRef } from "react";
 
 interface WisdomCard3DProps {
 	wisdom: WisdomItem;
@@ -21,6 +22,47 @@ export function WisdomCard3D({
 	isActive,
 	isMobile,
 }: WisdomCard3DProps) {
+	const cardRef = useRef<HTMLDivElement>(null);
+
+	// --- Mouse Interaction Logic ---
+	const mouseX = useMotionValue(0);
+	const mouseY = useMotionValue(0);
+
+	const resetMousePosition = () => {
+		mouseX.set(0);
+		mouseY.set(0);
+	};
+
+	const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+		if (!cardRef.current || !isActive || isMobile) return;
+		const { clientX, clientY } = event;
+		const { left, top, width, height } =
+			cardRef.current.getBoundingClientRect();
+		const x = clientX - (left + width / 2);
+		const y = clientY - (top + height / 2);
+		mouseX.set(x);
+		mouseY.set(y);
+	};
+
+	// Map mouse position to rotation
+	const rawRotateX = useTransform(mouseY, [-200, 200], [15, -15]);
+	const rawRotateY = useTransform(mouseX, [-200, 200], [-15, 15]);
+
+	// Apply spring smoothing to the rotation values
+	const springConfig = { stiffness: 300, damping: 30, mass: 1 };
+	const rotateX = useSpring(rawRotateX, springConfig);
+	const rotateY = useSpring(rawRotateY, springConfig);
+
+	// Map mouse position for the light glare effect
+	const lightX = useTransform(mouseX, [-200, 200], ["0%", "100%"]);
+	const lightY = useTransform(mouseY, [-200, 200], ["0%", "100%"]);
+	const radialGradient = useTransform(
+		[lightX, lightY],
+		([x, y]) =>
+			`radial-gradient(circle at ${x} ${y}, rgba(255,255,255,0.25), transparent 50%)`,
+	);
+	// --- End: Mouse Interaction Logic ---
+
 	// Calculate z-index, scale, and position based on card position
 	const getCardStyles = () => {
 		// For mobile, use a simpler transformation
@@ -53,9 +95,20 @@ export function WisdomCard3D({
 
 	const styles = getCardStyles();
 
+	// Combine base animation styles with **sprung** mouse-driven rotation
+	const combinedStyle = {
+		...(!isMobile && isActive && { rotateX, rotateY }),
+		transformStyle: "preserve-3d",
+		transformOrigin: "center center",
+		boxShadow: isActive
+			? "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px 5px rgba(139, 92, 246, 0.3)"
+			: "0 10px 30px -5px rgba(0, 0, 0, 0.3)",
+	} as const;
+
 	return (
 		<motion.div
-			className={`absolute aspect-[3/4] cursor-pointer ${isMobile ? "w-4/5" : "w-1/3"}`}
+			ref={cardRef}
+			className={`absolute aspect-[3/4] cursor-pointer ${isMobile ? "w-4/5" : "w-1/3 max-w-lg"}`}
 			initial={false}
 			animate={{
 				zIndex: styles.zIndex,
@@ -67,22 +120,19 @@ export function WisdomCard3D({
 			}}
 			transition={{
 				type: "spring",
-				stiffness: 300,
-				damping: 30,
+				stiffness: 250,
+				damping: 25,
 				mass: 1,
 			}}
 			onClick={onClick}
 			onTap={onClick}
-			whileHover={
-				isActive ? { scale: styles.scale * 1.05, y: styles.y - 10 } : {}
-			}
-			style={{
-				transformStyle: "preserve-3d",
-				transformOrigin: "center center",
-				boxShadow: isActive
-					? "0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px 5px rgba(139, 92, 246, 0.3)"
-					: "0 10px 30px -5px rgba(0, 0, 0, 0.3)",
+			whileHover={{
+				scale: isActive ? styles.scale * 1.05 : styles.scale * 1.02,
+				y: isActive ? styles.y - 10 : styles.y,
 			}}
+			onMouseMove={handleMouseMove}
+			onMouseLeave={resetMousePosition}
+			style={combinedStyle}
 		>
 			<div
 				className={`relative bg-gradient-to-br rounded-2xl overflow-hidden h-full
@@ -96,6 +146,7 @@ export function WisdomCard3D({
 						fill
 						className="object-cover"
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+						priority={isActive}
 					/>
 				</div>
 
@@ -120,6 +171,16 @@ export function WisdomCard3D({
 							</svg>
 						</span>
 					</div>
+				)}
+
+				{!isMobile && isActive && (
+					<motion.div
+						className="absolute inset-0 rounded-2xl pointer-events-none"
+						style={{
+							background: radialGradient,
+						}}
+						transition={{ duration: 0.1 }}
+					/>
 				)}
 			</div>
 		</motion.div>
