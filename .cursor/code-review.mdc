@@ -1,0 +1,134 @@
+# Project Code Review
+
+This review outlines observations, suggestions, and change requests across configuration, dependencies, code style, performance, security, accessibility, and testing.
+
+---
+
+## 1. TypeScript Configuration
+
+- **Strict Mode** enabled (`"strict": true`): ✅ Good. Ensures type safety.
+- **skipLibCheck** (`"skipLibCheck": true`): ⚠️ May mask errors in third-party types—consider disabling once migration is stable.
+- **allowJs** (`"allowJs": true`): ❓ Only needed if mixing JS/TS; remove if not used to reduce build complexity.
+- **noEmit** (`"noEmit": true`): ✅ Fine for Next.js but ensure type-checking runs in CI.
+
+**Change Requests:**
+1. Disable `skipLibCheck` after stabilizing types.
+2. Remove `allowJs` if there are no legacy JS files.
+3. Add `strictNullChecks` explicitly for clarity (although included in `strict`).
+
+## 2. Next.js Configuration
+
+- **ignoreBuildErrors** (`eslint` & `typescript.ignoreBuildErrors`): ⚠️ Hides lint/type errors from CI/build—risky for production quality.
+- **unoptimized images**: Disables Next.js built-in image optimization—may hurt loading performance.
+
+**Change Requests:**
+1. Remove `ignoreDuringBuilds` and `ignoreBuildErrors`; fix existing lint/type issues.
+2. Re-enable image optimization (set `unoptimized: false`) and configure domains or loader appropriately.
+
+## 3. Dependencies
+
+- **Pinned vs `latest`**: Some packages (e.g., `@emotion/is-prop-valid`, `framer-motion`) use `latest`, leading to unpredictable upgrades.
+- **React 19**: Using `"^19"`; Next.js v15 currently supports React 18—verify compatibility.
+- **Large dependency list**: Audit for unused packages and security vulnerabilities.
+
+**Change Requests:**
+1. Pin versions in `package.json` to specific semver ranges (e.g., `^x.y.z`).
+2. Confirm React version compatibility; downgrade to React 18 if necessary.
+3. Run `npm audit`/`pnpm audit` and address vulnerabilities.
+4. Remove unused dependencies (e.g., any imports not referenced in code).
+
+## 4. Tailwind CSS Configuration
+
+- **Content Paths**: Includes `./src/**/*` but project uses `components/`, `app/`, etc.—remove stray patterns.
+- **Empty prefix**: No benefit; remove if unused.
+
+**Change Requests:**
+1. Trim `content` array to actual directories: `app/`, `components/`, `pages/`.
+2. Remove `"*.{js,ts,jsx,tsx,mdx}"` catch-all unless needed.
+3. Remove `prefix: ""` or set a meaningful prefix if namespacing.
+
+## 5. Project Structure & Organization
+
+- **File structure**: Components are at root `components/`—consider grouping domain-specific vs UI primitives.
+- **Naming conventions**: Mix of kebab-case and camelCase in filenames—standardize on one (e.g., `kebab-case.tsx`).
+
+**Change Requests:**
+1. Standardize file naming (e.g., all-lowercase with hyphens).
+2. Introduce a `src/` folder to contain source files for clarity.
+3. Split `components/ui/` vs `components/domain/` for better separation.
+
+## 6. Code Style & Best Practices
+
+- Missing explicit return types on React components—add `: JSX.Element` or `: React.FC`.
+- Use `React.FC` sparingly; prefer typed function components for improved inference.
+- Consistent usage of single vs double quotes—project uses double quotes; enforce in ESLint.
+
+**Change Requests:**
+1. Add return type annotations to all components (e.g., `function Home(): JSX.Element { ... }`).
+2. Ensure ESLint/Prettier config enforces quote style, trailing commas, etc.
+3. Replace any `any` types with stricter alternatives or generics.
+
+## 7. Performance Considerations
+
+- **3D rendering (`wisdom-cards-3d.tsx`)**: Heavy client-side work—consider dynamic import with `ssr: false`.
+- **Unbounded drawer/modal**: Ensure offscreen components are unmounted to free memory.
+
+**Change Requests:**
+1. Wrap heavy components in `dynamic(() => import(...), { ssr: false, loading: () => <Spinner/> })`.
+2. Dispose of Three.js geometries and materials in cleanup functions.
+
+## 8. Security Best Practices
+
+- No environment variable usage shown—ensure secrets (API keys) are stored in `.env.local` and not committed.
+- Validate and sanitize any user input (e.g., in forms via React Hook Form + Zod).
+
+**Change Requests:**
+1. Add `.env.example` with placeholder variables; ignore `.env*` in git.
+2. Use Zod schemas to validate all inputs before processing.
+3. Audit third-party packages for known vulnerabilities.
+
+## 9. Testing & CI
+
+- No tests detected—add unit tests (Jest/React Testing Library) and integration tests.
+- No CI pipeline configured—set up GitHub Actions to run lint, type-check, build, and tests on PRs.
+
+**Change Requests:**
+1. Introduce `jest.config.ts` and sample tests for critical components.
+2. Create `.github/workflows/ci.yml` with steps: install, lint, type-check, build, test.
+
+## 10. Accessibility
+
+- Ensure all interactive elements (buttons, links) have accessible labels and `alt` attributes.
+- Color contrast on `bg-gradient-to-b from-slate-900 via-purple-900` should meet WCAG.
+
+**Change Requests:**
+1. Run axe audits and fix accessibility violations.
+2. Add `aria-*` attributes where necessary (e.g., in `Hero` for slideshows).
+
+## 11. Miscellaneous
+
+- **Documentation**: No README—add project overview, setup instructions, deployment steps.
+- **License**: No license file—add appropriate open-source license if public.
+
+**Change Requests:**
+1. Add `README.md` with setup, script usage, environment variables.
+2. Add `LICENSE` file.
+
+## TODO List
+
+- [ ] Remove any unused dependencies
+- [ ] Update `tailwind.config.ts` content array to include only actual directories: `app/`, `components/`, `pages/`
+- [ ] Remove catch-all pattern (`*.{js,ts,jsx,tsx,mdx}`) in Tailwind content paths
+- [ ] Remove empty `prefix` or set a meaningful prefix in `tailwind.config.ts`
+- [ ] Standardize file naming convention to lowercase kebab-case (e.g., `component-name.tsx`)
+- [ ] Configure Biome to enforce consistent quote style and trailing commas
+- [ ] Replace `any` types with stricter types or generics
+- [ ] Wrap heavy client-side components (e.g., `wisdom-cards-3d.tsx`) with `dynamic` imports (`ssr: false`) and a loading fallback
+- [ ] Dispose of Three.js geometries and materials in cleanup functions
+- [ ] Add appropriate `aria-*` attributes to interactive components for accessibility
+- [ ] Add `README.md` with project overview, setup instructions, and usage
+
+---
+
+*End of Review*
+
