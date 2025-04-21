@@ -4,7 +4,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "It's Okay To Live A Life Others Don't Understand",
 		shortDescription: "Embrace your unique path despite others' expectations",
-		imageUrl: "/images/wisdom-16.jpg",
+		imageUrl: "/images/wisdom-16.webp",
 		explanation:
 			"As you get older, you realize that being true to yourself often means taking a different path that goes against usual norms and expectations. Embrace your unique journey even if others don't understand it.",
 		examples: [
@@ -22,7 +22,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "The mountains you are carrying were only meant to be climbed",
 		shortDescription: "Release burdens and overcome challenges",
-		imageUrl: "/images/wisdom-17.jpg",
+		imageUrl: "/images/wisdom-17.webp",
 		explanation:
 			"Often we hold onto burdens longer than necessary, turning them into weights we carry instead of obstacles we overcome. Challenges are meant to be confronted and surmounted, not carried as perpetual burdens. By focusing on climbing the mountains in our path rather than lugging them with us, we free ourselves to grow and move forward.",
 		examples: [
@@ -40,7 +40,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "Surfer Mentality",
 		shortDescription: "Enjoy the present while knowing more waves will come",
-		imageUrl: "/images/wisdom-18.jpg",
+		imageUrl: "/images/wisdom-18.webp",
 		explanation:
 			"When a surfer gets up on a wave, they fully immerse in the present experience, aware the wave will end but confident more waves are coming. This reminds us to savor each moment without fear of its impermanence, trusting that there are always new opportunities ahead.",
 		examples: [
@@ -58,7 +58,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "Pressure is a privilege",
 		shortDescription: "High expectations signal trust and potential",
-		imageUrl: "/images/wisdom-19.jpg",
+		imageUrl: "/images/wisdom-19.webp",
 		explanation:
 			"Pressure is a sign that you've earned a place where expectations are high, and the opportunity to rise to the challenge is within reach. It's a reflection of your potential and the trust placed in you.",
 		examples: [
@@ -76,7 +76,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "Fear Nothing",
 		shortDescription: "Cosmic perspective dissolves fear",
-		imageUrl: "/images/wisdom-20.jpg",
+		imageUrl: "/images/wisdom-20.webp",
 		explanation:
 			"Recognizing that you're a ghost driving a meat-coated skeleton made from stardust, hurtling through space on a rock reminds you of life's vastness and the fleeting nature of fear. In the grand cosmic journey, many of our worries shrink to insignificance.",
 		examples: [
@@ -94,7 +94,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "To Know Who You Are, You Must Know Who You Are Not",
 		shortDescription: "Eliminate the excess to reveal your essence",
-		imageUrl: "/images/wisdom-21.jpg",
+		imageUrl: "/images/wisdom-21.webp",
 		explanation:
 			"By removing what doesn't align with your true values and purpose, you accidentally place what truly matters at the forefront. Knowing who you are not helps you discover who you really are.",
 		examples: [
@@ -112,7 +112,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "Yhprum's Law",
 		shortDescription: "Everything that can go right, will go right",
-		imageUrl: "/images/wisdom-22.jpg",
+		imageUrl: "/images/wisdom-22.webp",
 		explanation:
 			"While Murphy's Law makes us fear the worst, Yhprum's Law reminds us that life has a way of working out, often in unexpectedly wonderful ways when we least expect it.",
 		examples: [
@@ -130,7 +130,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "Embrace What You Can't Control",
 		shortDescription: "Accept circumstances beyond your influence",
-		imageUrl: "/images/wisdom-23.jpg",
+		imageUrl: "/images/wisdom-23.webp",
 		explanation:
 			"External events often lie beyond our control, but we always have power over our responses. Embracing what we cannot control is the first step to greater resilience and peace of mind.",
 		examples: [
@@ -148,7 +148,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "Use Your Demons to Your Advantage",
 		shortDescription: "Leverage personal struggles for growth",
-		imageUrl: "/images/wisdom-24.jpg",
+		imageUrl: "/images/wisdom-24.webp",
 		explanation:
 			"The very challenges and fears we try to suppress can become our greatest sources of strength when redirected toward positive growth. By acknowledging and channeling our demons, we transform adversity into fuel for success.",
 		examples: [
@@ -166,7 +166,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "When Fishermen Cannot Go to Sea, They Repair Nets",
 		shortDescription: "Use downtime to prepare for the next opportunity",
-		imageUrl: "/images/wisdom-25.jpg",
+		imageUrl: "/images/wisdom-25.webp",
 		explanation:
 			"When conditions prevent you from taking action, use that time to strengthen your skills, refine your tools, and prepare for future opportunities. Progress happens even in stillness.",
 		examples: [
@@ -184,7 +184,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "Preparation Always Beats Planning",
 		shortDescription: "Anticipate chaos and prepare accordingly",
-		imageUrl: "/images/wisdom-26.jpg",
+		imageUrl: "/images/wisdom-26.webp",
 		explanation:
 			"Planning often fails when unpredictability strikes because it assumes order. Preparation expects chaos and builds the flexibility and resilience needed to adapt and thrive in any condition.",
 		examples: [
@@ -202,7 +202,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "The past is in your head, the future is in your hands",
 		shortDescription: "Let go of the past and shape your future with action",
-		imageUrl: "/images/wisdom-27.jpg",
+		imageUrl: "/images/wisdom-27.webp",
 		explanation:
 			"The past exists only as memories we carry in our minds, but the future is shaped by the actions you take today. By releasing regrets and focusing on what you can do now, you ensure your future falls into the hands of your making.",
 		examples: [
@@ -221,7 +221,7 @@ export const wisdomData: WisdomItem[] = [
 		title:
 			"If You Keep Carrying Old Bricks, You'll Keep Building the Same House",
 		shortDescription: "Let go of old patterns to create new possibilities",
-		imageUrl: "/images/wisdom-28.jpg",
+		imageUrl: "/images/wisdom-28.webp",
 		explanation:
 			"Holding onto old habits and mindsets is like carrying the same bricks to build the same house again. To create new experiences and growth, you must let go of what no longer serves you and gather fresh materials for change.",
 		examples: [
@@ -239,7 +239,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "Nobody Is Thinking About You",
 		shortDescription: "Others are focused on their own lives, not judging you",
-		imageUrl: "/images/wisdom-29.jpg",
+		imageUrl: "/images/wisdom-29.webp",
 		explanation:
 			"People are mostly occupied with their own thoughts, concerns, and dramas—not yours. Realizing this can free you from needless self-consciousness and social anxiety.",
 		examples: [
@@ -257,7 +257,7 @@ export const wisdomData: WisdomItem[] = [
 	{
 		title: "The Cage is Open",
 		shortDescription: "Break free from self-imposed limitations",
-		imageUrl: "/images/wisdom-15.jpg",
+		imageUrl: "/images/wisdom-15.webp",
 		explanation:
 			"When a bird's cage door is left open and yet the bird remains inside, it reminds us that often we imprison ourselves with fear and self-doubt. Freedom is available if we choose to embrace it.",
 		examples: [
