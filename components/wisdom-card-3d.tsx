@@ -1,7 +1,7 @@
 "use client";
 
 import type { WisdomItem } from "@/types/wisdom";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
 
@@ -23,6 +23,10 @@ export function WisdomCard3D({
 	isMobile,
 }: WisdomCard3DProps) {
 	const cardRef = useRef<HTMLDivElement>(null);
+
+	// Store initial position and mobile status in refs for useMemo dependency
+	const initialPositionRef = useRef(position);
+	const initialIsMobileRef = useRef(isMobile);
 
 	// --- Mouse Interaction Logic ---
 	const mouseX = useMotionValue(0);
@@ -93,6 +97,7 @@ export function WisdomCard3D({
 		};
 	};
 
+	// Calculate styles based on the current position prop
 	const styles = getCardStyles();
 
 	// Combine base animation styles with **sprung** mouse-driven rotation
@@ -115,7 +120,6 @@ export function WisdomCard3D({
 				x: styles.x,
 				y: styles.y,
 				scale: styles.scale,
-				rotateY: styles.rotateY,
 				opacity: styles.opacity,
 			}}
 			transition={{
